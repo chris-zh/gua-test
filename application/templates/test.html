@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <script src="../static/js/jquery-1.10.2.js"></script>
+    <script src="../static/js/app.js"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <link rel="icon" href="../static/img/favicon.ico">
+</head>
+<body>
+<div id="user1" class="gua-form">
+    <input class="gua-input" type="text" data-key="userName" value="gua">
+    <input class="gua-input" text="text" data-key="password">
+    <button class="gua-submit"
+            data-path="/api/admin/user/query"
+            data-method="post"
+            data-block="updateUserBlock">查询用户信息
+    </button>
+</div>
+<div id="user2" class="gua-form">
+    <input class="gua-input" text="text" data-key="password">
+</div>
+<div id='my-user'>
+    <table class="pure-table pure-table-horizontal">
+        <thead>
+            <tr>
+                <th>用户ID</th>
+                <th>用户名</th>
+            </tr>
+        </thead>
+        <tbody id="user-list">
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+    var updateUserBlock = function (r) {
+        var userList = r;
+        for(var user of userList){
+            var html = renderUserList(user);
+            $('#user-list').append(html);
+        }
+    }
+
+    var renderUserList = function(user){
+        var template = `
+                <tr>
+                    <td>${user.userId}</td>
+                    <td>${user.userName}</td>
+                </tr>
+            `;
+        return template;
+    };
+
+    $('body').on('click', '.gua-submit', function () {
+        Guaction(this)
+    });
+
+</script>
+
+</body>
+</html>

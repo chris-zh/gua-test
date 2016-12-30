@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Preheating Dashboard</title>
+    <script src="../static/js/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <script>
+        var holder;
+        $(document).ready(function () {
+            var log = function () {
+                console.log(arguments);
+            };
+
+            $("#button-test").on('click',function () {
+                var request = {
+                    url: "http://127.0.0.1:9000/preheating//jsonp",
+                    type: "get",
+                    success: function (r) {
+                        holder = r;
+                        log('success', r);
+                    },
+                    error:function (e) {
+                        log('error', e);
+                    },
+                    dataType:'jsonp',
+                };
+                $.ajax(request);
+            });
+
+            $("#button-two-days").on('click', function () {
+                var request = {
+                    url: "http://127.0.0.1:9000/preheating//twoDays",
+                    type: "get",
+                    success: function (r) {
+                        var data = r['message'];
+                        log(data);
+                        alert(data);
+                    },
+                    error: function (r) {
+                        console.log("error", r)
+                    },
+                    dataType: 'jsonp',
+                };
+                $.ajax(request);
+            });
+
+            $("#button-half-hour").on('click', function () {
+                var request = {
+                    url: "http://127.0.0.1:9000/preheating/halfHour",
+                    type: "get",
+                    success: function (r) {
+                        var data = r['message'];
+                        log(data);
+                        alert(data);
+                    },
+                    error: function (r) {
+                        console.log("error", r)
+                    },
+                    dataType: 'jsonp',
+                };
+                $.ajax(request);
+            });
+
+            var get = function(url) {
+                var request = {
+                    url: "http://127.0.0.1:9000/preheating"+url,
+                    type: "get",
+                    success: function (r) {
+                        var data = r['message'];
+                        log(data);
+                        alert(data);
+                    },
+                    error: function (r) {
+                        console.log("error", r)
+                    },
+                    dataType: 'jsonp',
+                };
+                $.ajax(request);
+            };
+
+            $("#button-one-hour").on('click',function() {
+                var url = "/oneHour";
+                get(url);
+            });
+        })
+    </script>
+</head>
+<body>
+<div class="pure-control-group">
+    <p>Hello, Coupon</p>
+</div>
+<div>
+    <button class="pure-button" id="button-half-hour">半小时缓存</button>
+    <button class="pure-button" id="button-two-days">2天缓存</button>
+    <!--<button class="pure-button" id="button-five-minutes">五分钟缓存</button>-->
+    <button class="pure-button" id="button-one-hour">一小时缓存</button>
+    <button class="pure-button" id="button-test">test</button>
+</div>
+
+<div>
+    <!--<img class="pure-img" src="../static/img/hj.png">-->
+</div>
+</body>
+</html>
